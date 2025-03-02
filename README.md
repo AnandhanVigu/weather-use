@@ -1,100 +1,83 @@
-# Welcome to React Router!
+Setup Instructions
+Prerequisites : 
+Node.js and npm installed on your system.
+A valid API key from WeatherAPI.
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Installation :
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+1 . Clone the repository:
 
-## Features
+	git clone <repository-url>
+            cd <project-folder>
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+2 . Install dependencies:
 
-## Getting Started
+	npm install
 
-### Installation
+3 . Create a .env file in the root directory and add:
 
-Install the dependencies:
+	VITE_WEATHER_API_KEY=api_key_here
 
-```bash
-npm install
-```
+4 . Start the development server:
 
-### Development
+	npm run dev
 
-Start the development server with HMR:
+API Integration Details : 
 
-```bash
-npm run dev
-```
+Weather API: Used to fetch 7-day forecast data based on the city.
+OpenStreetMap (Nominatim API): Used to get the city name based on geolocation.
 
-Your application will be available at `http://localhost:5173`.
+UI Libraries and Features :
+1. React Icons
+Used for incorporating various icons.
 
-## Building for Production
 
-Create a production build:
+import { WiHumidity, WiStrongWind, WiDayCloudy, WiRain } from "react-icons/wi"
 
-```bash
-npm run build
-```
+2. DaisyUI
+Used for UI components and utility classes.
+     
+   <span className="loading loading-dots loading-xl"></span>
 
-## Deployment
 
-### Docker Deployment
 
-This template includes three Dockerfiles optimized for different package managers:
 
-- `Dockerfile` - for npm
-- `Dockerfile.pnpm` - for pnpm
-- `Dockerfile.bun` - for bun
+3. Tailwind CSS
+Used for styling and responsive design.
+      
+<div className="flex gap-5 justify-center items-center h-screen text-purple-600">content</div>
 
-To build and run using Docker:
+4. Toastify Message
+Used for notifications and alerts of error.
 
-```bash
-# For npm
-docker build -t my-app .
 
-# For pnpm
-docker build -f Dockerfile.pnpm -t my-app .
+import { ToastContainer, toast } from 'react-toastify';
+toast.error('Invalid City');
 
-# For bun
-docker build -f Dockerfile.bun -t my-app .
+Add <ToastContainer /> in the root component.
 
-# Run the container
-docker run -p 3000:3000 my-app
-```
 
-The containerized application can be deployed to any platform that supports Docker, including:
+Component Structure : 
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
+Home.tsx (Main file for handling state and rendering UI components)
+Dashboard.tsx (Displays current weather and city details)
+ForeCastList.tsx (Forecast list for desktop view)
+ForeCastListMb.tsx (Forecast list for mobile view)
+SearchBox.tsx (Handles user search input)
 
-### DIY Deployment
+Summary :
+This project integrates WeatherAPI for weather data, OpenStreetMap for geolocation, and utilizes React, Tailwind CSS, DaisyUI, React Icons, and React Toastify for a dynamic and user-friendly experience . 
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
 
-Make sure to deploy the output of `npm run build`
 
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
 
-## Styling
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
 
----
 
-Built with ❤️ using React Router.
+
+
+
+
+
+
+
