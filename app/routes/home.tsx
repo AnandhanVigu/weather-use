@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Dashboard from "~/dashboard/Dashboard";
 import ForeCastList from "~/forecastlist/ForeCastList";
 import ForeCastListMb from "~/forecastlist_mb/ForeCastListMb";
@@ -42,42 +42,44 @@ export default function Home() {
 
   const getWeatherDetail = async (city: string) => {
     try {
-      const response = await fetch(
-        `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7`
-      );
-      if (!response.ok) {
-        throw new Error('Failed to fetch weather data');
+      if (city) {
+        const response = await fetch(
+          `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7`
+        );
+        if (!response.ok) {
+          throw new Error('Failed to fetch weather data');
+        }
+
+        const data = await response.json();
+
+        const currentCityData: CityDetailType = {
+          country: data.location.country,
+          region: data.location.region,
+          name: data.location.name,
+        };
+
+        setCityDetail(currentCityData);
+
+        const filteredData = data.forecast.forecastday.map((day: any) => ({
+          date: day.date,
+          mintemp_c: day.day.mintemp_c,
+          maxtemp_c: day.day.maxtemp_c,
+          maxtemp_f: day.day.maxtemp_f,
+          mintemp_f: day.day.mintemp_f,
+          avgtemp_c: day.day.avgtemp_c,
+          avgtemp_f: day.day.avgtemp_f,
+          maxwind_mph: day.day.maxwind_mph,
+          maxwind_kph: day.day.maxwind_kph,
+          avghumidity: day.day.avghumidity,
+          totalprecip_mm: day.day.totalprecip_mm,
+          condition: {
+            text: day.day.condition.text,
+            icon: day.day.condition.icon,
+          },
+        }));
+
+        setWeather(filteredData);
       }
-
-      const data = await response.json();
-
-      const currentCityData: CityDetailType = {
-        country: data.location.country,
-        region: data.location.region,
-        name: data.location.name,
-      };
-
-      setCityDetail(currentCityData);
-
-      const filteredData = data.forecast.forecastday.map((day: any) => ({
-        date: day.date,
-        mintemp_c: day.day.mintemp_c,
-        maxtemp_c: day.day.maxtemp_c,
-        maxtemp_f: day.day.maxtemp_f,
-        mintemp_f: day.day.mintemp_f,
-        avgtemp_c: day.day.avgtemp_c,
-        avgtemp_f: day.day.avgtemp_f,
-        maxwind_mph: day.day.maxwind_mph,
-        maxwind_kph: day.day.maxwind_kph,
-        avghumidity: day.day.avghumidity,
-        totalprecip_mm: day.day.totalprecip_mm,
-        condition: {
-          text: day.day.condition.text,
-          icon: day.day.condition.icon,
-        },
-      }));
-
-      setWeather(filteredData);
     } catch (err) {
       toast.error('Invalid City');
     } finally {
@@ -118,19 +120,19 @@ export default function Home() {
   return (
     <div>
       <ToastContainer />
-      <div className="h-screen">
-          <div className="flex h-full  w-full">
-            <div className="md:w-4/6 w-full bg-white">
-              <SearchBox setCity={setCity} />
-              <Dashboard showCelsius={showCelsius} setShowCelsius={setShowCelsius} currentIndex={currentIndex} weather={weather} cityDetail={cityDetail} />
-            </div>
-            <div className="md:w-2/6 hidden md:block">
-              <ForeCastList setCurrentIndex={setCurrentIndex} showCelsius={showCelsius} weather={weather} />
-            </div>
-            <div className="md:hidden fixed bottom-5 right-5 bg-white shadow-md">
-              <ForeCastListMb setCurrentIndex={setCurrentIndex} showCelsius={showCelsius} weather={weather} />
-            </div>
+      <div className="h-screen p-4">
+        <div className="flex h-full  w-full">
+          <div className="md:w-4/6 w-full bg-white">
+            <SearchBox setCity={setCity} />
+            <Dashboard showCelsius={showCelsius} setShowCelsius={setShowCelsius} currentIndex={currentIndex} weather={weather} cityDetail={cityDetail} />
           </div>
+          <div className="md:w-2/6 hidden md:block">
+            <ForeCastList setCurrentIndex={setCurrentIndex} showCelsius={showCelsius} weather={weather} />
+          </div>
+          <div className="md:hidden fixed bottom-5 right-5 bg-white shadow-md">
+            <ForeCastListMb setCurrentIndex={setCurrentIndex} showCelsius={showCelsius} weather={weather} />
+          </div>
+        </div>
       </div>
     </div>
 
