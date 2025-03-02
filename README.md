@@ -8,7 +8,7 @@ Installation :
 1 . Clone the repository:
 
 	git clone <repository-url>
-            cd <project-folder>
+    cd <project-folder>
 
 2 . Install dependencies:
 
@@ -24,8 +24,9 @@ Installation :
 
 API Integration Details : 
 
-Weather API: Used to fetch 7-day forecast data based on the city.
-OpenStreetMap (Nominatim API): Used to get the city name based on geolocation.
+		Weather API: Used to fetch 7-day forecast data based on the city.
+		
+		OpenStreetMap (Nominatim API): Used to get the city name based on geolocation.
 
 UI Libraries and Features :
 1. React Icons
