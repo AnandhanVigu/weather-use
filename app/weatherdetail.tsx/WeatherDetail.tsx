@@ -1,10 +1,15 @@
-import {  type WeatherData } from "~/routes/home";
+import {  UserContext, type WeatherData } from "~/routes/home";
 import { WiHumidity, WiStrongWind, WiDayCloudy, WiRain } from "react-icons/wi";
-interface WeatherDetailType {
-    weather: WeatherData[]
-    currentIndex: number
-}
-const WeatherDetail = ({ weather, currentIndex }: WeatherDetailType) => {
+import { useContext } from "react";
+
+const WeatherDetail = () => {
+    const context = useContext(UserContext);
+
+    if (!context) {
+        return <p>Loading context...</p>;
+    }
+
+    const { weather, currentIndex } = context;
     const currentWeather = weather[currentIndex];
     return (
         <div className=" text-white w-full">

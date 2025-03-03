@@ -1,15 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import ForeCastList from '~/forecastlist/ForeCastList';
 import { CgDetailsMore } from "react-icons/cg";
-import type { WeatherData } from '~/routes/home';
+import { UserContext, type WeatherData } from '~/routes/home';
 
 interface ForeCastListMbType {
     setCurrentIndex: (index: number) => void;
     showCelsius: boolean
-        weather:WeatherData[]
     
 }
-const ForeCastListMb = ({ setCurrentIndex, showCelsius,weather }: ForeCastListMbType) => {
+const ForeCastListMb = ({ setCurrentIndex, showCelsius }: ForeCastListMbType) => {
+  const context = useContext(UserContext);
+  
+      if (!context) {
+          return <p>Loading context...</p>;
+      }
+  
   return (
     <div>
     <button
@@ -36,7 +41,7 @@ const ForeCastListMb = ({ setCurrentIndex, showCelsius,weather }: ForeCastListMb
 
       </form>
       <div className='mt-5'>
-      <ForeCastList weather={weather} setCurrentIndex={setCurrentIndex} showCelsius={showCelsius}/>
+      <ForeCastList  setCurrentIndex={setCurrentIndex} showCelsius={showCelsius}/>
 
       </div>
     </div>

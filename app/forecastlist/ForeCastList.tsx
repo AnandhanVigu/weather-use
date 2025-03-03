@@ -1,10 +1,17 @@
-import {  type WeatherData } from "~/routes/home";
+import { useContext } from "react";
+import {  UserContext, type WeatherData } from "~/routes/home";
 interface ForeCastListType {
     setCurrentIndex: (index: number) => void;
     showCelsius: boolean,
-    weather: WeatherData[]
 }
-const ForeCastList = ({ setCurrentIndex, showCelsius, weather }: ForeCastListType) => {
+const ForeCastList = ({ setCurrentIndex, showCelsius }: ForeCastListType) => {
+    const context = useContext(UserContext);
+
+    if (!context) {
+        return <p>Loading context...</p>;
+    }
+
+    const { weather } = context;
     const changeDay = (index: number) => {
         setCurrentIndex(index);
         close()

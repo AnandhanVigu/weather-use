@@ -1,13 +1,18 @@
-import { type CityDetailType, type WeatherData } from "~/routes/home";
+import { useContext } from "react";
+import { UserContext, type CityDetailType, type WeatherData } from "~/routes/home";
 import WeatherDetail from "~/weatherdetail.tsx/WeatherDetail";
 interface DashboardType {
     setShowCelsius: (value: boolean) => void;
     showCelsius: boolean
-    cityDetail: CityDetailType | undefined
-    weather: WeatherData[]
-    currentIndex: number
+   
 }
-const Dashboard = ({ showCelsius, setShowCelsius, cityDetail, weather, currentIndex }: DashboardType) => {
+const Dashboard = ({ showCelsius, setShowCelsius}: DashboardType) => {
+    const context = useContext(UserContext);
+    if (!context) {
+        return <p>Loading context...</p>;
+    }
+    const { weather, currentIndex, cityDetail } = context;
+
     const currentWeather = weather[currentIndex];
     return (
         <div className="md:p-8 p-2 text-purple-900   w-full flex flex-col justify-between ">
@@ -45,7 +50,7 @@ const Dashboard = ({ showCelsius, setShowCelsius, cityDetail, weather, currentIn
                 <img src={currentWeather.condition.icon} alt="Weather Icon" width={200} />
             </div>
             <div className="mt-4 bg-purple-900">
-                <WeatherDetail currentIndex={currentIndex} weather={weather} />
+                <WeatherDetail />
             </div>
             <p className="text-center mt-5 text-lg">Stay informed about the weather, wherever you are <span className="loading loading-dots loading-md"></span></p>
 

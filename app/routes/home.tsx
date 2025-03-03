@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { createContext,useEffect, useState } from "react";
 import Dashboard from "~/dashboard/Dashboard";
 import ForeCastList from "~/forecastlist/ForeCastList";
 import ForeCastListMb from "~/forecastlist_mb/ForeCastListMb";
@@ -29,6 +29,12 @@ export interface CityDetailType {
   region: string,
   name: string
 }
+interface UserContextType {
+  weather: WeatherData[];
+  currentIndex: number;
+  cityDetail: CityDetailType | undefined;
+}
+export const UserContext = createContext<UserContextType | null>(null);
 
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
@@ -121,20 +127,24 @@ export default function Home() {
   return (
     <div>
       <ToastContainer />
+      <UserContext.Provider value={{ currentIndex, weather, cityDetail }}>
+
       <div className="h-screen p-4">
         <div className="flex h-full  w-full">
           <div className="md:w-4/6 w-full bg-white">
             <SearchBox setCity={setCity} />
-            <Dashboard showCelsius={showCelsius} setShowCelsius={setShowCelsius} currentIndex={currentIndex} weather={weather} cityDetail={cityDetail} />
+            <Dashboard showCelsius={showCelsius} setShowCelsius={setShowCelsius} />
           </div>
           <div className="md:w-2/6 hidden md:block">
-            <ForeCastList setCurrentIndex={setCurrentIndex} showCelsius={showCelsius} weather={weather} />
+            <ForeCastList setCurrentIndex={setCurrentIndex} showCelsius={showCelsius}  />
           </div>
           <div className="md:hidden fixed bottom-5 right-5 bg-white shadow-md">
-            <ForeCastListMb setCurrentIndex={setCurrentIndex} showCelsius={showCelsius} weather={weather} />
+            <ForeCastListMb setCurrentIndex={setCurrentIndex} showCelsius={showCelsius} />
           </div>
         </div>
       </div>
+      </UserContext.Provider>
+
     </div>
 
   );
