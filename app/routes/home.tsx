@@ -109,10 +109,12 @@ export default function Home() {
 
   if (loading || weather.length === 0) {
     return (
-      <div className="flex gap-5 justify-center items-center h-screen text-purple-600">
-        <p className="text-lg font-semibold ">Loading weather data</p>
-        <span className="loading loading-dots loading-xl"></span>
-
+      <div className="flex flex-col gap-5 justify-center items-center h-screen text-purple-600">
+        <p className="text-lg font-semibold">Please Turn On Your Location!!!</p>
+        <div className="flex gap-5">
+          <p className="text-lg font-semibold ">Loading weather data</p>
+          <span className="loading loading-dots loading-xl"></span>
+        </div>
       </div>
     );  }
 
