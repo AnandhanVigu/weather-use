@@ -39,9 +39,7 @@ export default function Home() {
   const [cityDetail, setCityDetail] = useState<CityDetailType>();
   const [showCelsius, setShowCelsius] = useState(true);
   const [city, setCity] = useState('');
-const [isSearchButtonClick,setSearchButtonClick]=useState(false)
   const getWeatherDetail = async (city: string) => {
-    setSearchButtonClick(false)
     try {
       if (city) {
         const response = await fetch(
@@ -85,6 +83,7 @@ const [isSearchButtonClick,setSearchButtonClick]=useState(false)
       toast.error('Invalid City');
     } finally {
       setLoading(false);
+      setCity('')
     }
   };
 
@@ -106,7 +105,7 @@ const [isSearchButtonClick,setSearchButtonClick]=useState(false)
     } catch (error) {
       console.error("Error fetching new city data:", error);
     }
-  }, [city,isSearchButtonClick]);
+  }, [city]);
 
   if (loading || weather.length === 0) {
     return (
@@ -123,7 +122,7 @@ const [isSearchButtonClick,setSearchButtonClick]=useState(false)
       <div className="h-screen p-4">
         <div className="flex h-full  w-full">
           <div className="md:w-4/6 w-full bg-white">
-            <SearchBox setCity={setCity} setSearchButtonClick={setSearchButtonClick}/>
+            <SearchBox setCity={setCity} />
             <Dashboard showCelsius={showCelsius} setShowCelsius={setShowCelsius} currentIndex={currentIndex} weather={weather} cityDetail={cityDetail} />
           </div>
           <div className="md:w-2/6 hidden md:block">
