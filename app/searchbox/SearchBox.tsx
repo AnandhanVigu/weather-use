@@ -2,12 +2,14 @@ import { useState } from "react";
 
 interface SearchBoxType {
     setCity: (value: string) => void;
+    setSearchButtonClick: (value: boolean) => void;
 }
-const SearchBox = ({ setCity }: SearchBoxType) => {
+const SearchBox = ({ setCity,setSearchButtonClick }: SearchBoxType) => {
     const [cityName, setCityName] = useState('')
     const formSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setCity(cityName);
+        setSearchButtonClick(true)
     };
 
     return (
